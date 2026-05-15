@@ -5,7 +5,6 @@ import Button from '../../components/common/Button'
 
 export default function RequestList() {
   const { requests, loading, error } = useRequests()
-
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
@@ -14,10 +13,8 @@ export default function RequestList() {
           <Button>Nueva solicitud</Button>
         </Link>
       </div>
-
       {loading && <p className="text-sm text-gray-500">Cargando...</p>}
       {error && <p className="text-sm text-red-600">{error}</p>}
-
       {!loading && !error && (
         <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
           {requests.length === 0 ? (
@@ -29,6 +26,7 @@ export default function RequestList() {
                   <th className="px-4 py-3 font-medium">Título</th>
                   <th className="px-4 py-3 font-medium">Área</th>
                   <th className="px-4 py-3 font-medium">Estado</th>
+                  <th className="px-4 py-3 font-medium">Prioridad</th>
                   <th className="px-4 py-3 font-medium">Fecha</th>
                 </tr>
               </thead>
@@ -42,6 +40,15 @@ export default function RequestList() {
                     </td>
                     <td className="px-4 py-3 text-gray-600">{r.area_name}</td>
                     <td className="px-4 py-3"><StatusBadge status={r.status} /></td>
+                    <td className="px-4 py-3">
+                      <span className={
+                        r.priority === 'high' ? 'bg-red-100 text-red-700 px-2 py-1 rounded-full text-xs font-medium' :
+                        r.priority === 'low'  ? 'bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs font-medium' :
+                                                'bg-purple-100 text-purple-700 px-2 py-1 rounded-full text-xs font-medium'
+                      }>
+                        {r.priority}
+                      </span>
+                    </td>
                     <td className="px-4 py-3 text-gray-400">
                       {new Date(r.created_at).toLocaleDateString('es-MX')}
                     </td>
